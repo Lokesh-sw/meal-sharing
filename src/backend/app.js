@@ -26,6 +26,7 @@ app.get("/my-route", (req, res) => {
 });
 
 app.get("/future-meals", async (req, res) => {
+  // @ts-ignore
   const [row] = await knex.raw("SELECT * FROM Meal WHERE `when` > now()");
   if (row.length === 0) {
     res.status(404).json("Error : No meals");
@@ -34,6 +35,7 @@ app.get("/future-meals", async (req, res) => {
   }
 });
 app.get("/past-meals", async (req, res) => {
+  // @ts-ignore
   const [row] = await knex.raw("SELECT * FROM Meal WHERE `when` < now()");
   if (row.length === 0) {
     res.status(404).json("Error : No meals");
@@ -42,24 +44,25 @@ app.get("/past-meals", async (req, res) => {
   }
 });
 app.get("/all-meals", async (req, res) => {
+  // @ts-ignore
   const [row] = await knex.raw("SELECT * FROM Meal ORDER BY `id` ASC");
   if (row.length === 0) {
     res.status(404).json("Error : No meals");
   } else {
     res.json(row);
   }
-  ("");
 });
-app.get("/first-meals", async (req, res) => {
+app.get("/first-meal", async (req, res) => {
+  // @ts-ignore
   const [row] = await knex.raw("SELECT * FROM Meal ORDER BY `id` LIMIT 1");
   if (row.length === 0) {
     res.status(404).json("Error : No meals");
   } else {
     res.json(row);
   }
-  ("");
 });
 app.get("/last-meals", async (req, res) => {
+  // @ts-ignore
   const [row] = await knex.raw("SELECT * FROM Meal ORDER BY `id` DESC LIMIT 1");
   if (row.length === 0) {
     res.status(404).json("Error : No meals");
@@ -79,4 +82,5 @@ app.use("*", (req, res) => {
   res.sendFile(path.join(`${buildPath}/index.html`));
 });
 
+//
 module.exports = app;
